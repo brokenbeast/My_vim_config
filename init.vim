@@ -1,7 +1,9 @@
+set nu
 set number
 set syntax=on
 set autoindent
 set nobackup
+set relativenumber
 set noswapfile
 set hidden
 set ignorecase "vim do not tell B & b"
@@ -10,14 +12,22 @@ map S :w<CR>
 map Q :q<CR> 
 map R :source $MYVIMRC<CR>
 
+filetype plugin on  "nerdcommenter rpcrequest
+
 call plug#begin('~/.config/nvim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mg979/vim-xtabline'
 Plug 'kevinhwang91/rnvimr'
+Plug 'ntpeters/vim-better-whitespace'  "remove whitespce 
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } "modern than nerdtree
+Plug 'preservim/nerdcommenter'  "shortcut to give a comment nomatterwhat program
+Plug 'easymotion/vim-easymotion'
+Plug 'Yggdroot/indentLine'
 " Track the engine.
 Plug 'SirVer/ultisnips'
 Plug 'mg979/vim-visual-multi',{'branch':'master'}
 " Snippets are separated from the engine. Add this if you want them:
+Plug 'junegunn/vim-easy-align'
 Plug 'honza/vim-snippets'
 Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-surround'
@@ -29,8 +39,74 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'luochen1990/rainbow'
 Plug 'crusoexia/vim-monokai'
 Plug 'majutsushi/tagbar'
-
+Plug 'wakatime/vim-wakatime'
+Plug 'kien/rainbow_parentheses.vim'  "coloful
+Plug 'voldikss/vim-floaterm'
+Plug 'liuchengxu/vim-which-key'
+Plug 'Chiel92/vim-autoformat'
+Plug 'preservim/nerdtree' 
 call plug#end()
+"vim-which-key configuration
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+set timeoutlen=500
+let g:mapleader = "\<Space>"  "let mapleader=' ' this is how to set <leader>`
+"let g:maplocalleader = ','
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+
+"easymotion you must press as fast as you can instinctly
+nmap ss <Plug>(easymotion-s2)
+
+
+"F.A.Q https://www.npmjs.com/package/coc-highlight
+"Q: Why color highlight is not shown on my vim?
+"A: First, make sure "coc.preferences.colorSupport" is not false in your coc-settings.json, then make sure you have set termguicolors in your .vimrc, and your terminal support true color.
+"Q: How to change highlight of the current symbol.
+"A: All you need is overwrite the highlight group, checkout :h coc-highlights
+set termguicolors
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+"nerdcommenter
+let g:NERDCreateDefaultMappings = 1
+nmap<leader> , <Plug>(nerdcommenter)
+
+" split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
+noremap su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+noremap se :set splitbelow<CR>:split<CR>
+noremap sn :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+noremap si :set splitright<CR>:vsplit<CR>
+
+"vim-autoformat
+"let g:python3_host_prog=/path/to/python/executable/
+noremap <F3> :Autoformat<CR>
+
+
+" Applying codeAction to the selected region.
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+
+
+
+" Resize splits with arrow keys
+"noremap <up> :res +5<CR>
+"noremap <down> :res -5<CR>
+"noremap <left> :vertical resize-5<CR>
+"noremap <right> :vertical resize+5<CR>
+
+" Place the two screens up and down
+noremap sh <C-w>t<C-w>K
+" Place the two screens side by side
+noremap sv <C-w>t<C-w>H
+
+" Rotate screens
+noremap srh <C-w>b<C-w>K
+noremap srv <C-w>b<C-w>H
+
+" Press <SPACE> + q to close the window below the current window
+noremap <LEADER>q <C-w>j:q<CR>
+
+
 
 
 let g:tagbar_width=30
@@ -39,7 +115,7 @@ nnoremap <silent> <F4> :TagbarToggle<CR> " 将tagbar的开关按键设置为 F4
 set tags=tags;
 " setting auto completion([{
 
-
+"colo dark
 colo monokai
 
 let g:rainbow_active = 1
@@ -117,6 +193,12 @@ let g:airline_symbols.branch = 'BR'
 let g:airline_symbols.readonly = "RO"
 let g:airline_symbols.dirty = "DT"
 let g:airline_symbols.crypt = "CR" 
+
+
+
+
+
+
 
 
 
